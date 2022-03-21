@@ -1,5 +1,5 @@
 public class exceptionhandling {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MyException {
         // Handling the exceptions
         try {
             int result = 2 / 0;
@@ -12,5 +12,8 @@ public class exceptionhandling {
     }
 
     class MyException extends Exception {
+        public void show() {
+            System.out.println("Exception..");
+        }
     }
 }
