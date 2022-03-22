@@ -7,7 +7,7 @@ public class stringex {
         System.out.println(s.charAt(3)); // y
         System.out.println(s.substring(2, s.length())); // ryan
         // beginIndex - Including, lastIndex - Excluded
-        // System.out.println(s.split(" ").toString()); arrays
+        String[] arr = s.split(" ");
         System.out.println(s.equals("Aaryan is a cat"));
         System.out.println(s.concat(" and human"));
         System.out.println(s.indexOf("a")); // first occurence
@@ -26,5 +26,7 @@ public class stringex {
             }
         }
         System.out.println("a occured = " + counter + " times");
+
+        System.out.println(arr[3]);
     }
 }
