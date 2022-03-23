@@ -14,7 +14,5 @@ public class utftest {
         } catch(IOException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 }

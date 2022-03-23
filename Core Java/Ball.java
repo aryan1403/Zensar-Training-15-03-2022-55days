@@ -1,11 +1,13 @@
-public class Ball {
+import java.io.Serializable;
+
+public class Ball implements Serializable {
     String color;
     int size;
     String material;
     String game;
 
-    static Ball b1 = new Ball("white", 180, "Rubber", "Football");
-    static Ball b2 = new Ball("red", 80, "Rubber", "Cricket");
+    // static Ball b1 = new Ball("white", 180, "Rubber", "Football");
+    // static Ball b2 = new Ball("red", 80, "Rubber", "Cricket");
 
     // contructor -> a method of className
     public Ball(String color, int size, String material, String game) {
@@ -50,12 +52,5 @@ public class Ball {
     @Override
     public String toString() {
         return "Ball [color=" + color + ", game=" + game + ", material=" + material + ", size=" + size + "]";
-    }
-
-    
-    // Runner
-    public static void main(String[] args) {
-        System.out.println(b1.toString()); // it convert the object into String
-        System.out.println(b2.toString());
     }
 }
