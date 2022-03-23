@@ -12,6 +12,7 @@ public class threadex {
         } */
         // System.out.println(t1.isAlive()); // it is not started = false
         t1.start();
+        t2.start();
         try {
             t1.join(); // this is running other threads have to wait until the work is done
         } catch (InterruptedException e) {
