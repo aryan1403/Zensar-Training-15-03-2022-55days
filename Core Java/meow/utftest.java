@@ -8,7 +8,8 @@ public class utftest {
         try {
             RandomAccessFile raf = new RandomAccessFile("meow.txt", "rw");
             // raf.seek(1);
-            raf.writeBytes("12345");
+            // raf.writeBytes("12345");
+            System.out.println(raf.readLine());
             raf.close();
         } catch(IOException e) {
             System.out.println(e.getMessage());
