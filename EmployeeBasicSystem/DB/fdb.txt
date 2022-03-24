@@ -1,2 +1,0 @@
-EmpModel [address=xyz, company=zensar, dob=xyz, exp=8.0, id=8b19845c-38db-4027-92c3-23be096f983a, name=aryan, phone_no=, role=developer, salary=1000.0]
-EmpModel [address=, company=zensar, dob=xyz, exp=8.0, id=8b19845c-38db-4027-92c3-23be096f983a, name=aryan, phone_no=, role=developer, salary=1000.0]

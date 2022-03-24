@@ -43,12 +43,28 @@ public class fdb {
     }
 
     // Delete Employee by ID
-    public String[] deleteEmployee(String id) {
-        String[] arr = getAllData().split("EmpModel");
-
-        for (String a : arr) {
-            // EmpModel emp = (EmpModel) a;
+    public String deleteEmployee(String id) {
+        if(getAllData().contains(id)) {
+            String[] arr = getAllData().split("EmpModel");
+            try {
+                FileWriter writer = new FileWriter(new File("DB/fdb.txt"));
+                StringBuffer sb = new StringBuffer();
+                for (String s : arr) {
+                    if(!s.contains(id)) {
+                        sb.append("EmpModel " + s);
+                    }
+                }
+                writer.append(sb.toString());
+                writer.close();
+                return "Deleted Employee with Id="+id;
+            } catch(Exception e) {
+                return "Error Occured: "+e.getMessage();
+            }
         }
-        return arr;
+        return "Id is incorrect";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new fdb().deleteEmployee("874ddf01-cca3-4d2b-9214-9ab81797452a"));
     }
 }
