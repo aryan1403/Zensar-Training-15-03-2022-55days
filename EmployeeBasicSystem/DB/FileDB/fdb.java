@@ -10,9 +10,9 @@ public class fdb {
     // Add Employee to the FDB
     public String addEmp(EmpModel model) {
         File file = new File("DB/fdb.txt");
+        String pre_data = getAllData();
         try {
             FileWriter writer = new FileWriter(file);
-            String pre_data = getAllData();
             if(pre_data.isBlank()) {
                 writer.append(model.toString());
             } else {
@@ -51,7 +51,11 @@ public class fdb {
                 StringBuffer sb = new StringBuffer();
                 for (String s : arr) {
                     if(!s.contains(id)) {
-                        sb.append("EmpModel " + s);
+                        if(s.startsWith("EmpModel")) {
+                            sb.append(s);
+                        } else {
+                            sb.append("EmpModel" + s);
+                        }
                     }
                 }
                 writer.append(sb.toString());
