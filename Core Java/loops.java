@@ -15,5 +15,16 @@ public class loops {
             System.out.println("hello");
             i++;
         } while(i < 20);
+
+        // for each loop
+        int[] arr = new int[4];
+        arr[0] = 10;
+        arr[1] = 20;
+        arr[2] = 30;
+        // no Indexing..., easy, minimal
+        // faster than for i loop
+        for (int e : arr) {
+            System.out.println(e);
+        }
     }
 }
