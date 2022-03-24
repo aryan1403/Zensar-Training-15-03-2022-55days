@@ -1,5 +1,8 @@
 package Models;
-public class EmpModel {
+
+import java.io.Serializable;
+
+public class EmpModel implements Serializable {
     String id;
     String name;
     double salary;

@@ -1,26 +1,29 @@
 package DB.FileDB;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.UUID;
+
 import Models.EmpModel;
 
 public class fdb {
     // Add Employee to the FDB
     public String addEmp(EmpModel model) {
         File file = new File("DB/fdb.txt");
-        String pre_data = getAllData();
         try {
-            FileWriter writer = new FileWriter(file);
-            if(pre_data.isBlank()) {
-                writer.append(model.toString());
-            } else {
-                writer.append(pre_data + "\n" + model.toString());
-            }
-            writer.close();
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(model); // Serializing
+
+            oos.flush();
+            oos.close();
             return "Successfully Inserted Data";
-        } catch(IOException e) {
+        } catch (IOException e) {
             return "Error Occured: " + e.getMessage();
         }
     }
@@ -29,46 +32,41 @@ public class fdb {
     public String getAllData() {
         File file = new File("DB/fdb.txt");
         try {
-            FileReader reader = new FileReader(file);
-            int ch;
-            StringBuffer sb = new StringBuffer();
-            while ((ch = reader.read()) != -1) {
-                sb.append((char) ch);
-            }
-            reader.close();
-            return sb.toString();
-        } catch(Exception e) {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            String data = ois.readObject().toString(); // DeSerializing
+            ois.close();
+            return data;
+        } catch (Exception e) {
             return "Error Occured: " + e.getMessage();
         }
     }
 
     // Delete Employee by ID
     public String deleteEmployee(String id) {
-        if(getAllData().contains(id)) {
-            String[] arr = getAllData().split("EmpModel");
-            try {
-                FileWriter writer = new FileWriter(new File("DB/fdb.txt"));
-                StringBuffer sb = new StringBuffer();
-                for (String s : arr) {
-                    if(!s.contains(id)) {
-                        if(s.startsWith("EmpModel")) {
-                            sb.append(s);
-                        } else {
-                            sb.append("EmpModel" + s);
-                        }
-                    }
-                }
-                writer.append(sb.toString());
-                writer.close();
-                return "Deleted Employee with Id="+id;
-            } catch(Exception e) {
-                return "Error Occured: "+e.getMessage();
+        File file = new File("DB/fdb.txt");
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            EmpModel emp = (EmpModel) ois.readObject();
+            ois.close();
+            System.out.println(emp);
+
+            if (emp.getId().equals(id)) {
+                return "Deleted Employee with Id=" + id;
             }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error Occured: " + e);
         }
         return "Id is incorrect";
     }
 
     public static void main(String[] args) {
-        System.out.println(new fdb().deleteEmployee("874ddf01-cca3-4d2b-9214-9ab81797452a"));
+        System.out.println(
+                new fdb().addEmp(new EmpModel(UUID.randomUUID().toString(), "a", 1.0, "a", "c", 1.0, "a", "1", "a")));
+        System.out.println(new fdb().getAllData());
+        System.out.println(new fdb().deleteEmployee("9967fb87-3448-4504-b0a4-e149b12ce027"));
     }
 }
