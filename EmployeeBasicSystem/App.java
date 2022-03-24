@@ -4,10 +4,10 @@ import DB.FileDB.fdb;
 import Models.EmpModel;
 
 public class App {
-    static Scanner sc = new Scanner(System.in);
-    static Scanner sc2 = new Scanner(System.in);
-
     public static EmpModel TakeInfoForEmployee() {
+        Scanner sc = new Scanner(System.in);
+        Scanner sc2 = new Scanner(System.in);
+        
         System.out.print("Enter Employee Name : ");
         String name = sc2.nextLine();
         System.out.print("Enter your salary : ");
@@ -26,16 +26,30 @@ public class App {
         String dob = sc.nextLine();
 
         EmpModel emp = new EmpModel(UUID.randomUUID().toString(), name, salary, role, company, exp, address, phone_no, dob);
+        sc.close();
+        sc2.close();
         return emp;
+    }
+
+    public static String deleteEmployeeById() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Employee Id: ");
+        String id = sc.nextLine();
+
+        sc.close();
+
+        return new fdb().deleteEmployee(id);
     }
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Management System\n");
         System.out.println("Available Options :-");
-
+        
         while (true) {
+            Scanner sc = new Scanner(System.in);
             System.out.println("1. Add an Employee");
             System.out.println("2. Get all Employee's");
-            System.out.println("3. Exit");
+            System.out.println("3. Delete Employee");
+            System.out.println("4. Exit");
 
             System.out.print("Enter your choice : ");
             int choice = sc.nextInt();
@@ -53,8 +67,12 @@ public class App {
                         System.out.println(data + "\n");
                     }
                     break;
-                case 3: 
+                case 3:
+                    System.out.println(deleteEmployeeById());
+                    break;
+                case 4: 
                     System.out.println("Thanks for using our Employee System\n");
+                    sc.close();
                     // Exiting...
                     System.exit(0);
                 default:
