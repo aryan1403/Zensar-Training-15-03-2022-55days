@@ -12,7 +12,6 @@ public class setex {
         set.add(15);
         set.add(10);
 
-
         System.out.println(set);
     }
 }
