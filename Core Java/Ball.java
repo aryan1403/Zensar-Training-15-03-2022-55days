@@ -1,12 +1,12 @@
 import java.io.Serializable;
 
-public class Ball implements Serializable {
+public class Ball implements Serializable, Comparable<Ball>{
     String color;
     int size;
     String material;
     String game;
 
-    // static Ball b1 = new Ball("white", 180, "Rubber", "Football");
+    static Ball b1 = new Ball("white", 180, "Rubber", "Football");
     // static Ball b2 = new Ball("red", 80, "Rubber", "Cricket");
 
     // contructor -> a method of className
@@ -52,5 +52,13 @@ public class Ball implements Serializable {
     @Override
     public String toString() {
         return "Ball [color=" + color + ", game=" + game + ", material=" + material + ", size=" + size + "]";
+    }
+
+    @Override
+    public int compareTo(Ball o) {
+        if(o.size < b1.size) {
+            return -1;
+        }
+        return 0;
     }
 }
