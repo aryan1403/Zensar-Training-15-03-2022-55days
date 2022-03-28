@@ -12,6 +12,10 @@ public class syncCollObex {
         list.add(0);
         list.add(45);
 
+        Collections.sort(list);
+
+        System.out.println(list);
+
         Collection<Integer> col = Collections.synchronizedList(list);
         System.out.println("Synchronised View : " + col.toString());
     }
