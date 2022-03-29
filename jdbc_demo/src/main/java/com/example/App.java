@@ -12,7 +12,8 @@ public final class App {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/employeedb", "root", "");
             // Statement st = con.createStatement();
             // st.execute("select * from Empdata");
-            PreparedStatement ps = con.prepareStatement("select * from Empdata");
+            String query = "select * from Empdata";
+            PreparedStatement ps = con.prepareStatement(query);
 
             ResultSet rs = ps.executeQuery();
 
