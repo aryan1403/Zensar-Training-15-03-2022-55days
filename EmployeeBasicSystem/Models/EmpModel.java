@@ -13,6 +13,9 @@ public class EmpModel implements Serializable {
     String phone_no;
     String dob;
 
+    public EmpModel() {
+    }
+
     @Override
     public String toString() {
         return "EmpModel [address=" + address + ", company=" + company + ", dob=" + dob + ", exp=" + exp + ", id=" + id

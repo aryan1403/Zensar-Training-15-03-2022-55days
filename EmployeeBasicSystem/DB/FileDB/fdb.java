@@ -1,73 +1,122 @@
 package DB.FileDB;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.UUID;
-
+import java.util.Arrays;
+import java.util.List;
 import Models.EmpModel;
 
 public class fdb {
+    public EmpModel destructureString(List<String> l) {
+        EmpModel model = new EmpModel();
+        for (int i = 0; i < l.size(); i++) {
+            if (i == 0) {
+                model.setAddress(l.get(i).replace("address=", ""));
+            }
+            if (i == 1) {
+                model.setCompany(l.get(i).replace("company=", ""));
+            }
+            if (i == 2) {
+                model.setDob(l.get(i).replace("dob=", ""));
+            }
+            if (i == 3) {
+                model.setExp(Double.parseDouble(l.get(i).replace("exp=", "")));
+            }
+            if (i == 4) {
+                model.setId(l.get(i).replace("id=", ""));
+            }
+            if (i == 5) {
+                model.setName(l.get(i).replace("name=", ""));
+            }
+            if (i == 6) {
+                model.setPhone_no(l.get(i).replace("phone_no=", ""));
+            }
+            if (i == 7) {
+                model.setRole(l.get(i).replace("role=", ""));
+            }
+            if (i == 8) {
+                String salary = l.get(i).replace("salary=", "");
+                salary = salary.substring(0, salary.length() - 1);
+                model.setSalary(Double.parseDouble(salary));
+            }
+        }
+        return model;
+    }
+
+    // Load the Data from fdb.txt
+    public void loadData(List<EmpModel> list) {
+        try {
+            FileReader reader = new FileReader(new File("DB/fdb.txt"));
+            BufferedReader br = new BufferedReader(reader);
+
+            while (br.read() != -1) {
+                String d = br.readLine();
+                d = d.substring(9, d.length() - 1);
+                EmpModel model = destructureString(Arrays.asList(d.split(", ")));
+
+                list.add(model);
+            }
+            list.forEach(System.out::println);
+            System.out.println("Successfully Loaded Data");
+        } catch (IOException f) {
+            System.out.println(f.getMessage());
+        }
+    }
+
     // Add Employee to the FDB
-    public String addEmp(EmpModel model) {
+    public String addEmp(EmpModel model, List<EmpModel> list) {
         File file = new File("DB/fdb.txt");
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            // FileOutputStream fos = new FileOutputStream(file);
+            // ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            oos.writeObject(model); // Serializing
+            // oos.writeObject(model); // Serializing
 
-            oos.flush();
-            oos.close();
-  
-          return "Successfully Inserted Data";
+            // oos.flush();
+            // oos.close();
+
+            list.add(model);
+            FileWriter writer = new FileWriter(file);
+            StringBuffer sb = new StringBuffer();
+
+            for (EmpModel e : list) {
+                sb.append(e.toString() + "\n");
+            }
+            writer.append(sb.toString());
+
+            writer.close();
+            return "Successfully Inserted Data";
         } catch (IOException e) {
             return "Error Occured: " + e.getMessage();
         }
     }
 
     // Get All the Data from FDB
-    public String getAllData() {
-        File file = new File("DB/fdb.txt");
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            String data = ois.readObject().toString(); // DeSerializing
-            ois.close();
-            return data;
-        } catch (Exception e) {
-            return "Error Occured: " + e.getMessage();
-        }
+    public String getAllData(List<EmpModel> list) {
+        return list.toString();
     }
 
     // Delete Employee by ID
-    public String deleteEmployee(String id) {
-        File file = new File("DB/fdb.txt");
+    public String deleteEmployee(String id, List<EmpModel> list) {
         try {
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            for (EmpModel e : list) {
+                if (e.getId().equals(id)) {
+                    list.remove(e);
+                    FileWriter writer = new FileWriter(new File("DB/fdb.txt"));
+                    String data = list.toString();
+                    writer.append(data);
 
-            EmpModel emp = (EmpModel) ois.readObject();
-            ois.close();
-            System.out.println(emp);
-
-            if (emp.getId().equals(id)) {
-                return "Deleted Employee with Id=" + id;
+                    writer.close();
+                    return "Deleted Employee with Id=" + id;
+                }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error Occured: " + e);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return "Id is incorrect";
-    }
 
-    public static void main(String[] args) {
-        System.out.println(
-                new fdb().addEmp(new EmpModel(UUID.randomUUID().toString(), "a", 1.0, "a", "c", 1.0, "a", "1", "a")));
-        System.out.println(new fdb().getAllData());
-        System.out.println(new fdb().deleteEmployee("9967fb87-3448-4504-b0a4-e149b12ce027"));
     }
 }

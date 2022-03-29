@@ -1,9 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import DB.FileDB.fdb;
 import Models.EmpModel;
 
 public class App {
+    static List<EmpModel> list = new ArrayList<>();
+
+    // stati Block -> called before even constructor
+    static {
+        new fdb().loadData(list);
+    }
     public static EmpModel TakeInfoForEmployee() {
         Scanner sc = new Scanner(System.in);
         Scanner sc2 = new Scanner(System.in);
@@ -38,14 +46,14 @@ public class App {
 
         sc.close();
 
-        return new fdb().deleteEmployee(id);
+        return new fdb().deleteEmployee(id, list);
     }
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Management System\n");
         System.out.println("Available Options :-");
         
+        Scanner sc = new Scanner(System.in);
         while (true) {
-            Scanner sc = new Scanner(System.in);
             System.out.println("1. Add an Employee");
             System.out.println("2. Get all Employee's");
             System.out.println("3. Delete Employee");
@@ -57,10 +65,10 @@ public class App {
             switch (choice) {
                 case 1:
                     EmpModel emp = TakeInfoForEmployee();
-                    System.out.println(new fdb().addEmp(emp) + "\n");
+                    System.out.println(new fdb().addEmp(emp, list) + "\n");
                     break;
                 case 2:
-                    String data = new fdb().getAllData();
+                    String data = new fdb().getAllData(list);
                     if(data.isBlank()) {
                         System.out.println("No Employee Exist's\n");
                     } else {
