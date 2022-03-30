@@ -27,7 +27,5 @@ public final class App {
         } catch(SQLException se) {
             System.out.println(se.getMessage());
         }
-
-
     }
 }
