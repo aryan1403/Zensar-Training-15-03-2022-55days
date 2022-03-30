@@ -17,7 +17,6 @@ class sorting implements Comparator<Integer> {
         }
         return 0;
     }
-
 }
 
 public class lambdaex {
@@ -27,12 +26,8 @@ public class lambdaex {
         list.add(23);
         list.add(2);
 
-        list.sort((a, b) -> {
-            if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
+        list.sort(new sorting());
+        list.forEach(System.out::println);
         in i3 = () -> {
             System.out.println("Hello Aaryan");
         };
