@@ -31,7 +31,6 @@ public class dateapiex {
             @Override
             public void run() {
                 System.out.println("Hello Aaryan");
-                
             }
             
         }, 5000);
