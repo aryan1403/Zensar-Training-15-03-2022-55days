@@ -2,6 +2,7 @@ package meow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class stremex {
@@ -28,8 +29,20 @@ public class stremex {
         });*/
         // System.out.println("\nStream :-");
         list.stream().findAny();
-        list.stream().sorted().forEach(System.out::println);
-        list.stream().filter(e -> (e % 2 == 0)).collect(Collectors.toList());
+        // list.stream().sorted().forEach(System.out::println);
+        list.stream().filter(new pre()).collect(Collectors.toList()).forEach(System.out::println);;
         //list.stream().filter(e -> (e % 2 == 0)).collect(Collectors.toList()).forEach(System.out::println);
     }
+}
+
+class pre implements Predicate<Integer> {
+
+    @Override
+    public boolean test(Integer e) {
+        if(e % 2 == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

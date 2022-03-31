@@ -2,6 +2,7 @@ package meow;
 
 import java.util.function.DoubleFunction;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 public interface defaultex {
     public default void meow() {
@@ -13,7 +14,7 @@ public interface defaultex {
 }
 class mid implements defaultex {
     // convert int -> boolean
-    IntPredicate predicate = (value) -> {
+    static IntPredicate predicate = (value) -> {
         // Logic
         if(value % 2 == 0) {
             return true;

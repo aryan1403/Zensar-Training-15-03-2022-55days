@@ -2,7 +2,14 @@ package meow;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
+class c implements Consumer<Integer> {
+    @Override
+    public void accept(Integer i) {
+        System.out.println(i);
+    }
+}
 public class listex {
     public static void main(String[] args) {
         List<Integer> list = new LinkedList<>();
@@ -19,6 +26,8 @@ public class listex {
         System.out.println(list.indexOf(10));
         list.set(1, 80); // replaces
         list.add(1, 100); // push to the right
+
+        list.forEach(new c());
 
         // [10, 100, 80]
         System.out.println(list.subList(0, 2));
