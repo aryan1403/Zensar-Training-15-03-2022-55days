@@ -10,7 +10,6 @@ public class enumex {
         Level l = Level.high;
 
         Level[] v = Level.values();
-
         for (Level level : v) {
             System.out.println(level);
         }
