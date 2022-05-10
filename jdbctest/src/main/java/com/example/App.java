@@ -3,7 +3,6 @@ package com.example;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public final class App {
@@ -12,16 +11,15 @@ public final class App {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Register the Driver
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "");
 
-            String query = "SELECT * from test1";
+            String query = "insert into test1 values(?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, "P"); // name
+            ps.setInt(2, 45); // age
+            ps.setInt(3, 34); // salary
 
-            ResultSet rs = ps.executeQuery();
-
-            System.out.println("Names :-");
-            while(rs.next()) {
-                System.out.println(rs.getString("name"));
+            if(ps.execute()) {
+                System.out.println("Inserted");
             }
-
             con.close();
         } catch(SQLException | ClassNotFoundException se) {
             System.out.println(se.getMessage());
